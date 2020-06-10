@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Text.Unicode;
@@ -8,7 +9,7 @@ namespace Hangit.App
 {
     class Program
     {
-        public static string secretWord = "GODFATHER";
+        public static string finalWord = "GODFATHER";
         static void Main(string[] args)
         {
             //Console.OutputEncoding;
@@ -17,49 +18,91 @@ namespace Hangit.App
 
             HashSet<char> guessedCharacters = new HashSet<char>();
             int guessesLeft = 10;
+            char[] secretWord = new char[finalWord.Length];
+            
             do
             {
                 Console.WriteLine();
+                Console.WriteLine(MaskedSecretWord(finalWord, guessedCharacters));
                 Console.WriteLine(string.Join(' ', guessedCharacters));
                 Console.WriteLine($"Guesses left: {guessesLeft}");
                 Console.Write("Your guess: ");
                 string ans = Console.ReadLine().ToUpper();
-                
+
                 if (ValidGuess(ans))
                 {
-                    guessedCharacters.Add(ans[0]);
-                    
-                    if (secretWord.Contains(ans))
+                    if (guessedCharacters.Contains(ans[0]))
                     {
+                        Console.WriteLine($"You have already guessed '{ans[0]}'");
+                        continue;
+                    } else if (finalWord.Contains(ans))
+                    {
+                        
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Correct\n");
+                        Console.ForegroundColor = ConsoleColor.White;
+
                     }
 
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Wrong\n");
-                        guessesLeft--;
+                        Console.ForegroundColor = ConsoleColor.White;
 
+                        guessesLeft--;
                     }
+                    guessedCharacters.Add(ans[0]);
+
                 }
                 else
                 {
                     Console.WriteLine("Invalid guess");
                 }
 
-                foreach (var item in guessedCharacters)
+                
+
+            } while (guessesLeft>0 || (new string(secretWord) == finalWord));
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(":'######::::::'###::::'##::::'##:'########::::::::'#######::'##::::'##:'########:'########:::::");
+            Console.WriteLine("'##... ##::::'## ##::: ###::'###: ##.....::::::::'##.... ##: ##:::: ##: ##.....:: ##.... ##::::");
+            Console.WriteLine(" ##:::..::::'##:. ##:: ####'####: ##::::::::::::: ##:::: ##: ##:::: ##: ##::::::: ##:::: ##::::");
+            Console.WriteLine(" ##::'####:'##:::. ##: ## ### ##: ######::::::::: ##:::: ##: ##:::: ##: ######::: ########:::::");
+            Console.WriteLine(" ##::: ##:: #########: ##. #: ##: ##...:::::::::: ##:::: ##:. ##:: ##:: ##...:::: ##.. ##::::::");
+            Console.WriteLine(" ##::: ##:: ##.... ##: ##:.:: ##: ##::::::::::::: ##:::: ##::. ## ##::: ##::::::: ##::. ##:::::");
+            Console.WriteLine(". ######::: ##:::: ##: ##:::: ##: ########:::::::. #######::::. ###:::: ########: ##:::. ##::::");
+            Console.WriteLine(":......::::..:::::..::..:::::..::........:::::::::.......::::::...:::::........::..:::::..:::::");
+            Console.ResetColor();
+        }
+
+        private static string MaskedSecretWord(string finalWord, HashSet<Char> guessedCharacter)
+        {
+            var result = new StringBuilder();
+            foreach (char c in finalWord)
+            {
+                if (guessedCharacter.Contains(c))
                 {
-                    Console.Write(item + " ");
+                    result.Append(c);
+                } else
+                {
+                    result.Append('-');
                 }
 
-            } while (guessesLeft>0);
-            Console.WriteLine("GAME OVER");
-            
-            
-            
-            
-            
+            }
+
+            return result.ToString();
+
+            //for (int i = 0; i < secretWord.Length; i++)
+            //{
+            //    if (secretWord[i] == ans[0])
+            //    {
+            //        secretWord[i] = ans[0];
+            //    }
+            //    else if (secretWord[i] == 0)
+            //    {
+            //        secretWord[i] = '-';
+            //    }
+            //}
         }
 
         public static bool ValidGuess(string userGuess)
@@ -71,6 +114,8 @@ namespace Hangit.App
         {
             return Regex.IsMatch(userGuess.ToUpper(), "^[+ secretWord + ]$");
         }
+
+
         
     }
 }
