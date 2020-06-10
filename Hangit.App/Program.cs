@@ -35,7 +35,11 @@ namespace Hangit.App
             return Regex.IsMatch(userGuess.ToUpper(), "^[A-ZÆØÅ]$");
         }
 
-      
+        public static bool RightCharacter(string userGuess)
+        {
+            return Regex.IsMatch(userGuess.ToUpper(), "^[GODFATHER]$");
+        }
+
         
     }
 }
