@@ -8,24 +8,36 @@ namespace Hangit.App
         static void Main(string[] args)
         {
             string secretWord = "GODFATHER";
-            Console.WriteLine("Your guess: ");
-            string ans = Console.ReadLine();
+            do
+            {
+                Console.WriteLine("Your guess: ");
+                string ans = Console.ReadLine();
+                Console.WriteLine($"Your guess: {ans}");
+
+                if (!ValidGuess(ans))
+                {
+                    Console.WriteLine("Invalid guess");
+                    Console.ReadLine();
+                    Console.Clear();
+                }
+                else if (RightCharacter(ans))
+                {
+                    Console.WriteLine("Correct");
+                    Console.ReadLine();
+                    Console.Clear();
+
+                }
+                else
+                {
+                    Console.WriteLine("Wrong");
+                    Console.ReadLine();
+                    Console.Clear();
+
+                }
+            } while (true);
             
-            if(!ValidGuess(ans))
-            {
-                Console.WriteLine("Invalid choice!");
-            } 
-            else if (RightCharacter(ans))
-            {
-                Console.WriteLine($"You guessed: {ans}");
-                Console.WriteLine($"You guessed a correct letter.");
-                Console.WriteLine("Continue!");
-            } else
-            {
-                Console.WriteLine($"You guessed: {ans}");
-                Console.WriteLine("Wrong");
-                Console.WriteLine("\nGame over!");
-            }
+            
+            
             
             
         }
