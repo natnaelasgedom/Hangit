@@ -6,12 +6,11 @@ namespace Hangit.App
     {
         static void Main(string[] args)
         {
-
-
-            Console.WriteLine("Selam!");
-            Console.WriteLine("Selam!".ToUpper());
-
-
+            string secretWord = "GODFATHER";
+            Console.WriteLine("Your guess: ");
+            string ans = Console.ReadLine().ToUpper();
+            Console.WriteLine("You guessed: " + ans);
+            Console.WriteLine("\nGame over!");
         }
     }
 }
