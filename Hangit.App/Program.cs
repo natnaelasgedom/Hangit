@@ -9,27 +9,31 @@ namespace Hangit.App
         public static string secretWord = "GODFATHER";
         static void Main(string[] args)
         {
-            //List<char> guessedCharacters = new List<char>();
+            List<char> guessedCharacters = new List<char>();
             int guessesLeft = 10;
             do
             {
                 Console.WriteLine();
                 Console.WriteLine($"Guesses left: {guessesLeft}");
                 Console.Write("Your guess: ");
-                string ans = Console.ReadLine();
-                Console.WriteLine($"Your guess: {ans}");
-                guessesLeft--;
+                string ans = Console.ReadLine().ToUpper();
+                
                 if (ValidGuess(ans))
                 {
+                    if (!guessedCharacters.Contains(ans[0]))
+                    {
+                        guessedCharacters.Add(ans[0]);
+                    }
                     if (secretWord.Contains(ans))
                     {
-                        Console.WriteLine("Correct");
+                        Console.WriteLine("Correct\n");
                     }
                     
                     else
                     {
-                        Console.WriteLine("Wrong");
-                        //guessedCharacters.Add(ans[0]);
+                        Console.WriteLine("Wrong\n");
+                        guessesLeft--;
+
                     }
                 }
                 else
@@ -37,7 +41,12 @@ namespace Hangit.App
                     Console.WriteLine("Invalid guess");
                 }
 
-            } while (true && guessesLeft>0);
+                foreach (var item in guessedCharacters)
+                {
+                    Console.Write(item + " ");
+                }
+
+            } while (guessesLeft>0);
             Console.WriteLine("GAME OVER");
             
             
