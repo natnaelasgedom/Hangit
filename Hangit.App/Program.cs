@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Text.Unicode;
 
 namespace Hangit.App
 {
@@ -9,28 +11,33 @@ namespace Hangit.App
         public static string secretWord = "GODFATHER";
         static void Main(string[] args)
         {
-            List<char> guessedCharacters = new List<char>();
+            //Console.OutputEncoding;
+            //Console.InputEncoding;
+            //UTF8Encoding utf8 = new UTF8Encoding();
+
+            HashSet<char> guessedCharacters = new HashSet<char>();
             int guessesLeft = 10;
             do
             {
                 Console.WriteLine();
+                Console.WriteLine(string.Join(' ', guessedCharacters));
                 Console.WriteLine($"Guesses left: {guessesLeft}");
                 Console.Write("Your guess: ");
                 string ans = Console.ReadLine().ToUpper();
                 
                 if (ValidGuess(ans))
                 {
-                    if (!guessedCharacters.Contains(ans[0]))
-                    {
-                        guessedCharacters.Add(ans[0]);
-                    }
+                    guessedCharacters.Add(ans[0]);
+                    
                     if (secretWord.Contains(ans))
                     {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Correct\n");
                     }
-                    
+
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Wrong\n");
                         guessesLeft--;
 
