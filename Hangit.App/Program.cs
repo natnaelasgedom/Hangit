@@ -9,6 +9,7 @@ namespace Hangit.App
 
 
             Console.WriteLine("Selam!");
+            Console.WriteLine("Selam!".ToUpper());
 
 
         }
