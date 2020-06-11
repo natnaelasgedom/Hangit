@@ -121,17 +121,7 @@ namespace Hangit.App
 
             return result.ToString();
 
-            //for (int i = 0; i < secretWord.Length; i++)
-            //{
-            //    if (secretWord[i] == ans[0])
-            //    {
-            //        secretWord[i] = ans[0];
-            //    }
-            //    else if (secretWord[i] == 0)
-            //    {
-            //        secretWord[i] = '-';
-            //    }
-            //}
+            
         }
 
         public static bool ValidGuess(string userGuess)
