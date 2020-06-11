@@ -18,19 +18,19 @@ namespace Hangit.App
 
             HashSet<char> guessedCharacters = new HashSet<char>();
             int guessesLeft = 10;
-            string secretWord = "";
+            
             
             do
             {
                 Console.Clear();
-                secretWord = MaskedSecretWord(finalWord, guessedCharacters);
-                if (secretWord == finalWord)
+                if (MaskedSecretWord(finalWord, guessedCharacters) == finalWord || guessesLeft == 0)
                 {
+
                     break;
                 }
                 
                 Console.WriteLine();
-                InfoLine(secretWord);
+                InfoLine(MaskedSecretWord(finalWord, guessedCharacters));
                 InfoLine(string.Join(' ', guessedCharacters));
                 InfoLine($"Guesses left: {guessesLeft}");
                 Console.Write("Your guess: ");
@@ -69,7 +69,7 @@ namespace Hangit.App
 
 
 
-            } while (guessesLeft>0);
+            } while (true);
 
             EndMessage(guessesLeft);
             GameOver();
