@@ -95,7 +95,7 @@ namespace Hangit.App
             Console.WriteLine(" ##::: ##:: ##.... ##: ##:.:: ##: ##::::::::::::: ##:::: ##::. ## ##::: ##::::::: ##::. ##:::::");
             Console.WriteLine(". ######::: ##:::: ##: ##:::: ##: ########:::::::. #######::::. ###:::: ########: ##:::. ##::::");
             Console.WriteLine(":......::::..:::::..::..:::::..::........:::::::::.......::::::...:::::........::..:::::..:::::");
-            Console.ResetColor();
+            Console.ResetColor();  
         }
 
         private static void InfoLine(string message)
