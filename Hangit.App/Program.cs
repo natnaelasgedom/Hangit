@@ -22,6 +22,7 @@ namespace Hangit.App
             
             do
             {
+                Console.Clear();
                 secretWord = MaskedSecretWord(finalWord, guessedCharacters);
                 if (secretWord == finalWord)
                 {
@@ -40,16 +41,22 @@ namespace Hangit.App
                     if (guessedCharacters.Contains(ans[0]))
                     {
                         ErrorLine($"You have already guessed '{ans[0]}'");
+                        Console.ReadLine();
                         continue;
                     } else if (finalWord.Contains(ans))
                     {
                         SuccessLine("Correct\n");
+                        Console.ReadLine();
+
+
                     }
 
                     else
                     {
                         ErrorLine("Wrong\n");
                         guessesLeft--;
+                        Console.ReadLine();
+
                     }
                     guessedCharacters.Add(ans[0]);
 
@@ -57,9 +64,10 @@ namespace Hangit.App
                 else
                 {
                     ErrorLine("Invalid guess");
+                    Console.ReadLine();
                 }
-                
-                
+
+
 
             } while (guessesLeft>0);
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -78,18 +86,22 @@ namespace Hangit.App
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(message);
+           
+
         }
 
         private static void SuccessLine(string message)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(message);
+
         }
 
         private static void ErrorLine(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(message);
+
         }
 
         private static string MaskedSecretWord(string finalWord, HashSet<Char> guessedCharacter)
