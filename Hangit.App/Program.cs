@@ -18,14 +18,21 @@ namespace Hangit.App
 
             HashSet<char> guessedCharacters = new HashSet<char>();
             int guessesLeft = 10;
-            char[] secretWord = new char[finalWord.Length];
+            string secretWord = "";
             
             do
             {
+                Console.Clear();
+                secretWord = MaskedSecretWord(finalWord, guessedCharacters);
+                if (secretWord == finalWord)
+                {
+                    break;
+                }
+                
                 Console.WriteLine();
-                Console.WriteLine(MaskedSecretWord(finalWord, guessedCharacters));
-                Console.WriteLine(string.Join(' ', guessedCharacters));
-                Console.WriteLine($"Guesses left: {guessesLeft}");
+                InfoLine(secretWord);
+                InfoLine(string.Join(' ', guessedCharacters));
+                InfoLine($"Guesses left: {guessesLeft}");
                 Console.Write("Your guess: ");
                 string ans = Console.ReadLine().ToUpper();
 
@@ -33,36 +40,52 @@ namespace Hangit.App
                 {
                     if (guessedCharacters.Contains(ans[0]))
                     {
-                        Console.WriteLine($"You have already guessed '{ans[0]}'");
+                        ErrorLine($"You have already guessed '{ans[0]}'");
+                        Console.ReadLine();
                         continue;
                     } else if (finalWord.Contains(ans))
                     {
-                        
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Correct\n");
-                        Console.ForegroundColor = ConsoleColor.White;
+                        SuccessLine("Correct\n");
+                        Console.ReadKey();
 
                     }
 
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Wrong\n");
-                        Console.ForegroundColor = ConsoleColor.White;
-
+                        ErrorLine("Wrong\n");
                         guessesLeft--;
+                        Console.ReadKey();
+
+
                     }
                     guessedCharacters.Add(ans[0]);
 
                 }
                 else
                 {
-                    Console.WriteLine("Invalid guess");
+                    ErrorLine("Invalid guess");
+                    Console.ReadKey();
                 }
 
-                
 
-            } while (guessesLeft>0 || (new string(secretWord) == finalWord));
+
+            } while (guessesLeft>0);
+
+            EndMessage(guessesLeft);
+            GameOver();
+            
+        }
+
+        private static void EndMessage(int guessesLeft)
+        {
+            if(guessesLeft > 0)
+                Console.WriteLine("You won!");
+            else
+                Console.WriteLine("You lost!");
+        }
+
+        private static void GameOver()
+        {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(":'######::::::'###::::'##::::'##:'########::::::::'#######::'##::::'##:'########:'########:::::");
             Console.WriteLine("'##... ##::::'## ##::: ###::'###: ##.....::::::::'##.... ##: ##:::: ##: ##.....:: ##.... ##::::");
@@ -73,6 +96,28 @@ namespace Hangit.App
             Console.WriteLine(". ######::: ##:::: ##: ##:::: ##: ########:::::::. #######::::. ###:::: ########: ##:::. ##::::");
             Console.WriteLine(":......::::..:::::..::..:::::..::........:::::::::.......::::::...:::::........::..:::::..:::::");
             Console.ResetColor();
+        }
+
+        private static void InfoLine(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(message);
+           
+
+        }
+
+        private static void SuccessLine(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(message);
+
+        }
+
+        private static void ErrorLine(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+                
         }
 
         private static string MaskedSecretWord(string finalWord, HashSet<Char> guessedCharacter)
